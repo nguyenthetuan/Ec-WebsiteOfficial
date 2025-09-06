@@ -5,7 +5,7 @@ import "../css/style.css";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
-import { ModalProvider } from "../context/QuickViewModalContext";
+import { QuickViewModalProvider } from "../context/QuickViewModalContext";
 import { CartModalProvider } from "../context/CartSidebarModalContext";
 import { ReduxProvider } from "@/redux/provider";
 import QuickViewModal from "@/components/Common/QuickViewModal";
@@ -15,6 +15,7 @@ import PreviewSliderModal from "@/components/Common/PreviewSlider";
 
 import ScrollToTop from "@/components/Common/ScrollToTop";
 import PreLoader from "@/components/Common/PreLoader";
+import { ModalProvider } from "../context/ModalContext";
 
 export default function RootLayout({
   children,
@@ -35,17 +36,19 @@ export default function RootLayout({
         ) : (
           <>
             <ReduxProvider>
-              <CartModalProvider>
-                <ModalProvider>
-                  <PreviewSliderProvider>
-                    <Header />
-                    {children}
-                    <QuickViewModal />
-                    <CartSidebarModal />
-                    <PreviewSliderModal />
-                  </PreviewSliderProvider>
-                </ModalProvider>
-              </CartModalProvider>
+              <ModalProvider>
+                <CartModalProvider>
+                  <QuickViewModalProvider>
+                    <PreviewSliderProvider>
+                      <Header />
+                      {children}
+                      <QuickViewModal />
+                      <CartSidebarModal />
+                      <PreviewSliderModal />
+                    </PreviewSliderProvider>
+                  </QuickViewModalProvider>
+                </CartModalProvider>
+              </ModalProvider>
             </ReduxProvider>
             <ScrollToTop />
             <Footer />

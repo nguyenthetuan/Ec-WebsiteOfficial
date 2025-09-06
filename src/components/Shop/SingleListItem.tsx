@@ -2,7 +2,7 @@
 import React from "react";
 
 import { Product } from "@/types/product";
-import { useModalContext } from "@/app/context/QuickViewModalContext";
+import { useQuickViewModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
 import { addItemToWishlist } from "@/redux/features/wishlist-slice";
@@ -12,7 +12,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const SingleListItem = ({ item }: { item: Product }) => {
-  const { openModal } = useModalContext();
+  const { openQuickViewModal } = useQuickViewModalContext();
   const dispatch = useDispatch<AppDispatch>();
 
   // update the QuickView state
@@ -49,7 +49,7 @@ const SingleListItem = ({ item }: { item: Product }) => {
           <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
             <button
               onClick={() => {
-                openModal();
+                openQuickViewModal();
                 handleQuickViewUpdate();
               }}
               aria-label="button for quick view"
