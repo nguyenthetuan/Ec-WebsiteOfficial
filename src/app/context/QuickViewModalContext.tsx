@@ -1,36 +1,40 @@
-"use client"
+"use client";
 import React, { createContext, useContext, useState } from "react";
 
-interface ModalContextType {
-  isModalOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
+interface QuickViewModalContextType {
+  isQuickViewModalOpen: boolean;
+  openQuickViewModal: () => void;
+  closeQuickViewModal: () => void;
 }
 
-const ModalContext = createContext<ModalContextType | undefined>(undefined);
+const QuickViewModalContext = createContext<
+  QuickViewModalContextType | undefined
+>(undefined);
 
-export const useModalContext = () => {
-  const context = useContext(ModalContext);
+export const useQuickViewModalContext = () => {
+  const context = useContext(QuickViewModalContext);
   if (!context) {
     throw new Error("useModalContext must be used within a ModalProvider");
   }
   return context;
 };
 
-export const ModalProvider = ({ children }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export const QuickViewModalProvider = ({ children }) => {
+  const [isQuickViewModalOpen, setIsQuickViewModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openQuickViewModal = () => {
+    setIsQuickViewModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeQuickViewModal = () => {
+    setIsQuickViewModalOpen(false);
   };
 
   return (
-    <ModalContext.Provider value={{ isModalOpen, openModal, closeModal }}>
+    <QuickViewModalContext.Provider
+      value={{ isQuickViewModalOpen, openQuickViewModal, closeQuickViewModal }}
+    >
       {children}
-    </ModalContext.Provider>
+    </QuickViewModalContext.Provider>
   );
-}; 
+};

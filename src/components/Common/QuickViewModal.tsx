@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-import { useModalContext } from "@/app/context/QuickViewModalContext";
+import { useQuickViewModalContext } from "@/app/context/QuickViewModalContext";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { addItemToCart } from "@/redux/features/cart-slice";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,8 @@ import { resetQuickView } from "@/redux/features/quickView-slice";
 import { updateproductDetails } from "@/redux/features/product-details";
 
 const QuickViewModal = () => {
-  const { isModalOpen, closeModal } = useModalContext();
+  const { isQuickViewModalOpen, closeQuickViewModal } =
+    useQuickViewModalContext();
   const { openPreviewModal } = usePreviewSlider();
   const [quantity, setQuantity] = useState(1);
 
@@ -38,18 +39,18 @@ const QuickViewModal = () => {
       })
     );
 
-    closeModal();
+    closeQuickViewModal();
   };
 
   useEffect(() => {
     // closing modal while clicking outside
     function handleClickOutside(event) {
       if (!event.target.closest(".modal-content")) {
-        closeModal();
+        closeQuickViewModal();
       }
     }
 
-    if (isModalOpen) {
+    if (isQuickViewModalOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
@@ -58,18 +59,18 @@ const QuickViewModal = () => {
 
       setQuantity(1);
     };
-  }, [isModalOpen, closeModal]);
+  }, [isQuickViewModalOpen, closeQuickViewModal]);
 
   return (
     <div
       className={`${
-        isModalOpen ? "z-99999" : "hidden"
+        isQuickViewModalOpen ? "z-99999" : "hidden"
       } fixed top-0 left-0 overflow-y-auto no-scrollbar w-full h-screen sm:py-20 xl:py-25 2xl:py-[230px] bg-dark/70 sm:px-8 px-4 py-5`}
     >
       <div className="flex items-center justify-center ">
         <div className="w-full max-w-[1100px] rounded-xl shadow-3 bg-white p-7.5 relative modal-content">
           <button
-            onClick={() => closeModal()}
+            onClick={() => closeQuickViewModal()}
             aria-label="button for close modal"
             className="absolute top-0 right-0 sm:top-6 sm:right-6 flex items-center justify-center w-10 h-10 rounded-full ease-in duration-150 bg-meta text-body hover:text-dark"
           >

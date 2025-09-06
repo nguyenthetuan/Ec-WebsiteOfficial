@@ -8,14 +8,10 @@ import {
 
 import Image from "next/image";
 
-const SingleItem = ({ item }) => {
+const SingleItem = ({ item, onRequestRemove }) => {
   const [quantity, setQuantity] = useState(item.quantity);
 
   const dispatch = useDispatch<AppDispatch>();
-
-  const handleRemoveFromCart = () => {
-    dispatch(removeItemFromCart(item.id));
-  };
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -37,7 +33,12 @@ const SingleItem = ({ item }) => {
         <div className="flex items-center justify-between gap-5">
           <div className="w-full flex items-center gap-5.5">
             <div className="flex items-center justify-center rounded-[5px] bg-gray-2 max-w-[80px] w-full h-17.5">
-              <Image width={200} height={200} src={item.imgs?.thumbnails[0]} alt="product" />
+              <Image
+                width={200}
+                height={200}
+                src={item.imgs?.thumbnails[0]}
+                alt="product"
+              />
             </div>
 
             <div>
@@ -58,7 +59,8 @@ const SingleItem = ({ item }) => {
           <button
             onClick={() => handleDecreaseQuantity()}
             aria-label="button for remove product"
-            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue"
+            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue disabled:bg-gray-2 disabled:pointer-events-none"
+            disabled={quantity === 1}
           >
             <svg
               className="fill-current"
@@ -111,7 +113,7 @@ const SingleItem = ({ item }) => {
 
       <div className="min-w-[50px] flex justify-end">
         <button
-          onClick={() => handleRemoveFromCart()}
+          onClick={onRequestRemove}
           aria-label="button for remove product from cart"
           className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
         >

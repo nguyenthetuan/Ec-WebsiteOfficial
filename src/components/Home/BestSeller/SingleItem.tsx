@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Product } from "@/types/product";
-import { useModalContext } from "@/app/context/QuickViewModalContext";
+import { useQuickViewModalContext } from "@/app/context/QuickViewModalContext";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { updateQuickView } from "@/redux/features/quickView-slice";
@@ -11,7 +11,7 @@ import Link from "next/link";
 import { addItemToWishlist } from "@/redux/features/wishlist-slice";
 
 const SingleItem = ({ item }: { item: Product }) => {
-  const { openModal } = useModalContext();
+  const { openQuickViewModal } = useQuickViewModalContext();
   const dispatch = useDispatch<AppDispatch>();
 
   // update the QuickView state
@@ -98,7 +98,7 @@ const SingleItem = ({ item }: { item: Product }) => {
           <button
             onClick={() => {
               handleQuickViewUpdate();
-              openModal();
+              openQuickViewModal();
             }}
             aria-label="button for quick view"
             id="bestOne"

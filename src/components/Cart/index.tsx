@@ -1,17 +1,58 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Discount from "./Discount";
 import OrderSummary from "./OrderSummary";
-import { useAppSelector } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import SingleItem from "./SingleItem";
 import Breadcrumb from "../Common/Breadcrumb";
 import Link from "next/link";
+import Modal from "../Common/Modal";
+import { useModalContext } from "@/app/context/ModalContext";
+import { useDispatch } from "react-redux";
+import { removeItemFromCart } from "@/redux/features/cart-slice";
 
 const Cart = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const { openModal, closeModal } = useModalContext();
+  const dispatch = useDispatch<AppDispatch>();
+
   const cartItems = useAppSelector((state) => state.cartReducer.items);
+
+  const onRequestRemove = (item) => {
+    setSelectedItem(item);
+    openModal();
+  };
+
+  const handleCloseModal = () => {
+    setSelectedItem(null);
+    closeModal();
+  };
+
+  const handleRemoveItemFromCart = () => {
+    dispatch(removeItemFromCart(selectedItem.id));
+    closeModal();
+  };
 
   return (
     <>
+      <Modal>
+        <div>
+          <p>Do you want to remove {selectedItem?.title} from the cart?</p>
+          <div className="flex gap-x-4 pt-8 justify-end">
+            <button className="font-semibold" onClick={handleCloseModal}>
+              Cancel
+            </button>
+            <button
+              className="font-semibold bg-red-dark py-1 px-2 rounded-lg text-white"
+              onClick={handleRemoveItemFromCart}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </Modal>
+
       {/* <!-- ===== Breadcrumb Section Start ===== --> */}
       <section>
         <Breadcrumb title={"Cart"} pages={["Cart"]} />
@@ -54,7 +95,11 @@ const Cart = () => {
                   {/* <!-- cart item --> */}
                   {cartItems.length > 0 &&
                     cartItems.map((item, key) => (
-                      <SingleItem item={item} key={key} />
+                      <SingleItem
+                        item={item}
+                        onRequestRemove={() => onRequestRemove(item)}
+                        key={key}
+                      />
                     ))}
                 </div>
               </div>
