@@ -56,7 +56,10 @@ const SingleItem = ({ item, onRequestRemove }) => {
         </div>
 
         <div className="min-w-[200px] flex justify-between">
-          <p className="text-dark text-lg font-semibold">${item.price}</p>
+          <p className="text-dark text-lg font-semibold">
+            <span className="text-sm">$</span>
+            <span>{item.price}</span>
+          </p>
           <div className="flex items-center max-w-[100px] rounded-full border border-gray-400 overflow-hidden text-sm">
             <button
               onClick={() => handleDecreaseQuantity()}
@@ -67,7 +70,9 @@ const SingleItem = ({ item, onRequestRemove }) => {
               <Minus className="w-3 h-3" />
             </button>
 
-            <span className="flex-1 text-center w-[50px]">{quantity}</span>
+            <span className="flex-1 text-center w-[50px] font-bold">
+              {quantity}
+            </span>
 
             <button
               onClick={() => handleIncreaseQuantity()}

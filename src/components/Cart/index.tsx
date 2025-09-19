@@ -87,7 +87,7 @@ const Cart = () => {
       </section>
       {/* <!-- ===== Breadcrumb Section End ===== --> */}
       {cartItems.length > 0 ? (
-        <section className="overflow-hidden py-20 bg-gray-2">
+        <section className="py-20 bg-gray-2">
           <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
             <div className="grid grid-cols-12 gap-5">
               <div className="col-span-12 lg:col-span-8">
@@ -99,7 +99,7 @@ const Cart = () => {
                     Clear Shopping Cart
                   </button>
                 </div>
-                <div className="w-full overflow-x-auto bg-white rounded-[10px] shadow-1 ">
+                <div className="w-full bg-white rounded-[10px] shadow-1 ">
                   {/* <!-- cart item --> */}
                   {cartItems.length > 0 &&
                     cartItems.map((item, key) => (

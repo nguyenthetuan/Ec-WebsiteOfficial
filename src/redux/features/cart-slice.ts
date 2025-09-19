@@ -67,11 +67,29 @@ export const cart = createSlice({
 
 export const selectCartItems = (state: RootState) => state.cartReducer.items;
 
+export const selectTotalPriceBeforeDiscounted = createSelector(
+  [selectCartItems],
+  (items) => {
+    return items.reduce((total, item) => {
+      return total + item.price;
+    }, 0);
+  }
+);
+
 export const selectTotalPrice = createSelector([selectCartItems], (items) => {
   return items.reduce((total, item) => {
     return total + item.discountedPrice * item.quantity;
   }, 0);
 });
+
+export const selectTotalDiscount = createSelector(
+  [selectCartItems],
+  (items) => {
+    return items.reduce((total, item) => {
+      return total + (item.price - item.discountedPrice);
+    }, 0);
+  }
+);
 
 export const {
   addItemToCart,
