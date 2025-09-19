@@ -88,7 +88,7 @@ const Cart = () => {
       {/* <!-- ===== Breadcrumb Section End ===== --> */}
       {cartItems.length > 0 ? (
         <section className="py-20 bg-gray-2">
-          <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+          <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-8 xl:px-0">
             <div className="grid grid-cols-12 gap-5">
               <div className="col-span-12 lg:col-span-8">
                 <div className="flex flex-wrap items-center justify-between gap-5 mb-7.5 bg-white rounded-[10px] shadow-1 py-5 px-7.5">
@@ -121,7 +121,7 @@ const Cart = () => {
         </section>
       ) : (
         <>
-          <div className="text-center mt-8">
+          <div className="text-center my-40">
             <div className="mx-auto pb-7.5">
               <svg
                 className="mx-auto"
@@ -157,7 +157,7 @@ const Cart = () => {
 
             <Link
               href="/shop-with-sidebar"
-              className="w-96 mx-auto flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
+              className="w-60 mx-auto flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
             >
               Continue Shopping
             </Link>

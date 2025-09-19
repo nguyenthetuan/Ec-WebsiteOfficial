@@ -35,21 +35,21 @@
 /* third-party libraries CSS */
 
 /* clears the ‘X’ from Internet Explorer */
-input[type='search']::-ms-clear {
+input[type="search"]::-ms-clear {
   display: none;
   width: 0;
   height: 0;
 }
-input[type='search']::-ms-reveal {
+input[type="search"]::-ms-reveal {
   display: none;
   width: 0;
   height: 0;
 }
 /* clears the ‘X’ from Chrome */
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-results-button,
-input[type='search']::-webkit-search-results-decoration {
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 .custom-search {
@@ -117,13 +117,16 @@ input[type='search']::-webkit-search-results-decoration {
   @apply -mt-0.5;
 }
 
-
 .hero-carousel .swiper-pagination-bullet {
-  @apply h-1 w-4 rounded-[11px] bg-[#DDD];
+  @apply w-2 h-2 bg-transparent border border-blue opacity-70;
 }
 
 .hero-carousel .swiper-pagination-bullet-active {
-  @apply w-5.5 bg-blue;
+  @apply bg-blue opacity-100;
+}
+
+.swiper-btn {
+  @apply w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center bg-white cursor-pointer;
 }
 
 .hero-carousel .swiper-pagination {
@@ -173,9 +176,8 @@ input[type='search']::-webkit-search-results-decoration {
   @apply hidden;
 }
 
-
 .range-slider {
- @apply w-full !h-[4px] rounded-md bg-blue relative mb-3;
+  @apply w-full !h-[4px] rounded-md bg-blue relative mb-3;
 }
 
 .slider .thumb {
