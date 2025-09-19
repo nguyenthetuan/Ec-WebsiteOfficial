@@ -7,40 +7,68 @@ import SingleItem from "./SingleItem";
 import Breadcrumb from "../Common/Breadcrumb";
 import Link from "next/link";
 import Modal from "../Common/Modal";
-import { useModalContext } from "@/app/context/ModalContext";
 import { useDispatch } from "react-redux";
 import { removeItemFromCart } from "@/redux/features/cart-slice";
 
 const Cart = () => {
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const { openModal, closeModal } = useModalContext();
+  const [showRemoveItem, setShowRemoveItem] = useState(false);
+  const [showClearCart, setShowClearCart] = useState(false);
+
   const dispatch = useDispatch<AppDispatch>();
 
   const cartItems = useAppSelector((state) => state.cartReducer.items);
 
-  const onRequestRemove = (item) => {
-    setSelectedItem(item);
-    openModal();
+  const onClearCart = () => {
+    setShowClearCart(true);
   };
 
-  const handleCloseModal = () => {
+  const onRequestRemove = (item) => {
+    setSelectedItem(item);
+    setShowRemoveItem(true);
+  };
+
+  const handleCloseRemoveItem = () => {
     setSelectedItem(null);
-    closeModal();
+    setShowRemoveItem(false);
+  };
+
+  const handleCloseClearCart = () => {
+    setShowClearCart(false);
   };
 
   const handleRemoveItemFromCart = () => {
     dispatch(removeItemFromCart(selectedItem.id));
-    closeModal();
+    setShowRemoveItem(false);
   };
 
   return (
     <>
-      <Modal>
+      {/* POP-UP TO CONFIRM REMOVE ITEM FROM THEIR CART */}
+      <Modal isOpen={showRemoveItem} onClose={handleCloseRemoveItem}>
         <div>
-          <p>Do you want to remove {selectedItem?.title} from the cart?</p>
+          <p>Do you want to remove {selectedItem?.title} from your cart?</p>
           <div className="flex gap-x-4 pt-8 justify-end">
-            <button className="font-semibold" onClick={handleCloseModal}>
+            <button className="font-semibold" onClick={handleCloseRemoveItem}>
+              Cancel
+            </button>
+            <button
+              className="font-semibold bg-red-dark py-1 px-2 rounded-lg text-white"
+              onClick={handleRemoveItemFromCart}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* POP-UP TO CONFIRM REMOVE ALL ITEMS FROM THEIR CART */}
+      <Modal isOpen={showClearCart} onClose={handleCloseClearCart}>
+        <div>
+          <p>Do you want to remove all items from your cart?</p>
+          <div className="flex gap-x-4 pt-8 justify-end">
+            <button className="font-semibold" onClick={handleCloseClearCart}>
               Cancel
             </button>
             <button
@@ -61,37 +89,17 @@ const Cart = () => {
       {cartItems.length > 0 ? (
         <section className="overflow-hidden py-20 bg-gray-2">
           <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-            <div className="flex flex-wrap items-center justify-between gap-5 mb-7.5">
-              <h2 className="font-medium text-dark text-2xl">Your Cart</h2>
-              <button className="text-blue">Clear Shopping Cart</button>
-            </div>
-
-            <div className="bg-white rounded-[10px] shadow-1">
-              <div className="w-full overflow-x-auto">
-                <div className="min-w-[1170px]">
-                  {/* <!-- table header --> */}
-                  <div className="flex items-center py-5.5 px-7.5">
-                    <div className="min-w-[400px]">
-                      <p className="text-dark">Product</p>
-                    </div>
-
-                    <div className="min-w-[180px]">
-                      <p className="text-dark">Price</p>
-                    </div>
-
-                    <div className="min-w-[275px]">
-                      <p className="text-dark">Quantity</p>
-                    </div>
-
-                    <div className="min-w-[200px]">
-                      <p className="text-dark">Subtotal</p>
-                    </div>
-
-                    <div className="min-w-[50px]">
-                      <p className="text-dark text-right">Action</p>
-                    </div>
-                  </div>
-
+            <div className="grid grid-cols-12 gap-5">
+              <div className="col-span-12 lg:col-span-8">
+                <div className="flex flex-wrap items-center justify-between gap-5 mb-7.5 bg-white rounded-[10px] shadow-1 py-5 px-7.5">
+                  <h2 className="font-medium text-dark text-2xl">
+                    Your Cart ({cartItems.length})
+                  </h2>
+                  <button className="text-blue" onClick={onClearCart}>
+                    Clear Shopping Cart
+                  </button>
+                </div>
+                <div className="w-full overflow-x-auto bg-white rounded-[10px] shadow-1 ">
                   {/* <!-- cart item --> */}
                   {cartItems.length > 0 &&
                     cartItems.map((item, key) => (
@@ -103,11 +111,11 @@ const Cart = () => {
                     ))}
                 </div>
               </div>
-            </div>
 
-            <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-11 mt-9">
-              <Discount />
-              <OrderSummary />
+              <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-11 col-span-12 lg:col-span-4">
+                {/* <Discount /> */}
+                <OrderSummary />
+              </div>
             </div>
           </div>
         </section>
