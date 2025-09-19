@@ -14,7 +14,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
-  const { openModal } = useModalContext();
+  // const { openModal } = useModalContext();
 
   const product = useAppSelector((state) => state.cartReducer.items);
   const totalPrice = useSelector(selectTotalPrice);
@@ -45,7 +45,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 w-full z-9999 bg-white transition-all ease-in-out duration-300 ${
+      className={`left-0 top-0 w-full z-9999 bg-white transition-all ease-in-out duration-300 ${
         stickyMenu && "shadow"
       }`}
     >
