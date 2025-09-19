@@ -1,10 +1,15 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 
 interface ModalContextType {
   isModalOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -20,16 +25,8 @@ export const useModalContext = () => {
 export const ModalProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
-    <ModalContext.Provider value={{ isModalOpen, openModal, closeModal }}>
+    <ModalContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       {children}
     </ModalContext.Provider>
   );
