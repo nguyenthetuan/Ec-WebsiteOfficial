@@ -13,24 +13,32 @@ import Image from "next/image";
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [navigationOpen, setNavigationOpen] = useState(false);
-  const [stickyMenu, setStickyMenu] = useState(false);
-  // const { openModal } = useModalContext();
+
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const product = useAppSelector((state) => state.cartReducer.items);
   const totalPrice = useSelector(selectTotalPrice);
 
-  // Sticky menu
-  const handleStickyMenu = () => {
-    if (window.scrollY >= 80) {
-      setStickyMenu(true);
-    } else {
-      setStickyMenu(false);
-    }
-  };
-
   useEffect(() => {
-    window.addEventListener("scroll", handleStickyMenu);
-  });
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        // scrolling down
+        setShowNavbar(false);
+      } else {
+        // scrolling up
+        setShowNavbar(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const options = [
     { label: "All Categories", value: "0" },
@@ -45,20 +53,16 @@ const Header = () => {
 
   return (
     <header
-      className={`left-0 top-0 w-full z-9999 bg-white transition-all ease-in-out duration-300 ${
-        stickyMenu && "shadow"
+      className={`fixed left-0 top-0 w-full z-50 bg-white transition-transform duration-300 ${
+        showNavbar ? "translate-y-0 shadow-1" : "-translate-y-full"
       }`}
     >
-      <div className="max-w-[1170px] mx-auto px-4 sm:px-7.5 xl:px-0">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-7.5 xl:px-0">
         {/* <!-- header top start --> */}
-        <div
-          className={`flex flex-col lg:flex-row gap-5 items-end lg:items-center xl:justify-between ease-out duration-200 ${
-            stickyMenu ? "py-4" : "py-6"
-          }`}
-        >
+        <div className="flex flex-col lg:flex-row gap-5 items-end lg:items-center xl:justify-between ease-out duration-200 py-4">
           {/* <!-- header top left --> */}
-          <div className="xl:w-auto flex-col sm:flex-row w-full flex sm:justify-between sm:items-center gap-5 sm:gap-10">
-            <Link className="flex-shrink-0" href="/">
+          <div className="flex-col sm:flex-row w-full flex sm:justify-between sm:items-center gap-5 sm:gap-10">
+            <Link className="flex-shrink-0 w-[150px] md:w-[250px]" href="/">
               <Image
                 src="/images/logo/logo.svg"
                 alt="Logo"
@@ -67,12 +71,12 @@ const Header = () => {
               />
             </Link>
 
-            <div className="max-w-[475px] w-full">
+            <div className="w-full">
               <form>
                 <div className="flex items-center">
                   <CustomSelect options={options} />
 
-                  <div className="relative max-w-[333px] sm:min-w-[333px] w-full">
+                  <div className="relatived w-full">
                     {/* <!-- divider --> */}
                     <span className="absolute left-0 top-1/2 -translate-y-1/2 inline-block w-px h-5.5 bg-gray-4"></span>
                     <input
@@ -113,7 +117,7 @@ const Header = () => {
 
           {/* <!-- header top right --> */}
           <div className="flex w-full lg:w-auto items-center gap-7.5">
-            <div className="hidden xl:flex items-center gap-3.5">
+            <div className="hidden xl:flex items-center gap-3.5 w-[180px]">
               <svg
                 width="24"
                 height="24"
@@ -285,7 +289,7 @@ const Header = () => {
       </div>
 
       <div className="border-t border-gray-3">
-        <div className="max-w-[1170px] mx-auto px-4 sm:px-7.5 xl:px-0">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-7.5 xl:px-0">
           <div className="flex items-center justify-between">
             {/* <!--=== Main Nav Start ===--> */}
             <div
@@ -302,7 +306,7 @@ const Header = () => {
                       <Dropdown
                         key={i}
                         menuItem={menuItem}
-                        stickyMenu={stickyMenu}
+                        stickyMenu={showNavbar}
                       />
                     ) : (
                       <li
@@ -311,9 +315,7 @@ const Header = () => {
                       >
                         <Link
                           href={menuItem.path}
-                          className={`hover:text-blue text-custom-sm font-medium text-dark flex ${
-                            stickyMenu ? "xl:py-4" : "xl:py-6"
-                          }`}
+                          className="hover:text-blue text-custom-sm font-medium text-dark flex xl:py-4 "
                         >
                           {menuItem.title}
                         </Link>

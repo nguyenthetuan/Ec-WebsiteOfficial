@@ -1,0 +1,64 @@
+{
+  "banners": [
+    {
+      "title": {
+        "text": "Discover Your Sound",
+        "color": "#fff"
+      },
+      "description": {
+        "text": "Experience music the way the artist intended — crystal clear detail and deep, controlled bass.",
+        "color": "#fff"
+      },
+      "button": {
+        "text": "Shop Now",
+        "color": "#FF6B35"
+      },
+      "banner-img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1920&auto=format&fit=crop"
+    },
+    {
+      "title": {
+        "text": "Elevate Your Workspace",
+        "color": "#fff"
+      },
+      "description": {
+        "text": "Minimalist design, maximum productivity. Set up your dream workstation today.",
+        "color": "#fff"
+      },
+      "button": {
+        "text": "Explore Desks",
+        "color": "#007ACC"
+      },
+      "banner-img": "https://images.unsplash.com/photo-1593642533144-3d62bdc2d7c5?q=80&w=1920&auto=format&fit=crop"
+    },
+    {
+      "title": {
+        "text": "Adventure Awaits",
+        "color": "#FFFFFF"
+      },
+      "description": {
+        "text": "Pack light, travel far — gear up for your next journey into the wild.",
+        "color": "#fff"
+      },
+      "button": {
+        "text": "Get Gear",
+        "color": "#FF5722"
+      },
+      "banner-img": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1920&auto=format&fit=crop"
+    },
+    {
+      "title": {
+        "text": "Fresh Flavors Daily",
+        "color": "#fff"
+      },
+      "description": {
+        "text": "Savor chef-crafted recipes with farm-fresh ingredients delivered to your door.",
+        "color": "#fff"
+      },
+      "button": {
+        "text": "Order Now",
+        "color": "#27AE60"
+      },
+      "banner-img": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1920&auto=format&fit=crop"
+    }
+  ]
+}
