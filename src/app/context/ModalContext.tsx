@@ -10,6 +10,7 @@ import {
 interface ModalContextType {
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  openModal?: any;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
