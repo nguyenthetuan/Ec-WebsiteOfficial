@@ -19,11 +19,13 @@ import { NextIntlClientProvider } from "next-intl";
 import { usePathname } from "next/navigation";
 import jpMessages from "@/locales/jp.json";
 import viMessages from "@/locales/vi.json";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const messagesMap: Record<string, any> = {
   en: jpMessages,
   vi: viMessages,
 };
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -49,23 +51,25 @@ export default function RootLayout({
             messages={messagesMap[locale]}
             locale={locale}
           >
-            <ReduxProvider>
-              <ModalProvider>
-                <CartModalProvider>
-                  <QuickViewModalProvider>
-                    <PreviewSliderProvider>
-                      <Header />
-                      {children}
-                      <QuickViewModal />
-                      <CartSidebarModal />
-                      <PreviewSliderModal />
-                    </PreviewSliderProvider>
-                  </QuickViewModalProvider>
-                </CartModalProvider>
-              </ModalProvider>
-            </ReduxProvider>
-            <ScrollToTop />
-            <Footer />
+            <QueryClientProvider client={queryClient}>
+              <ReduxProvider>
+                <ModalProvider>
+                  <CartModalProvider>
+                    <QuickViewModalProvider>
+                      <PreviewSliderProvider>
+                        <Header />
+                        {children}
+                        <QuickViewModal />
+                        <CartSidebarModal />
+                        <PreviewSliderModal />
+                      </PreviewSliderProvider>
+                    </QuickViewModalProvider>
+                  </CartModalProvider>
+                </ModalProvider>
+              </ReduxProvider>
+              <ScrollToTop />
+              <Footer />
+            </QueryClientProvider>
           </NextIntlClientProvider>
         )}
       </body>
